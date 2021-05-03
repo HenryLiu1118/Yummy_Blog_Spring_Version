@@ -7,7 +7,6 @@ import com.example.yummy.demo.Repository.ProfileRepo;
 import com.example.yummy.demo.Repository.UserRepo;
 import com.example.yummy.demo.Request.CommentRequest;
 import com.example.yummy.demo.Request.PostRequest;
-import com.example.yummy.demo.Request.ProfileRequest;
 import com.example.yummy.demo.Responses.PostResponse;
 import com.example.yummy.demo.models.Dtos.PostDto;
 import com.example.yummy.demo.models.Dtos.UserDto;
@@ -17,20 +16,16 @@ import com.example.yummy.demo.models.User;
 import com.example.yummy.demo.models.Wraper.Comment;
 import com.example.yummy.demo.models.Wraper.Follow;
 import com.example.yummy.demo.models.Wraper.Like;
-import javafx.geometry.Pos;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-
-import javax.validation.constraints.Max;
 
 @Service
 public class PostService {
@@ -71,7 +66,7 @@ public class PostService {
         User user = userRepo.findBy_id(userId);
         int count = postRepo.findAllByUser(user).size();
         Pageable pageableRequest = PageRequest.of(page, limit, Sort.by("date").descending());
-        Page<Post> page1 = postRepo.findAllByUser(pageableRequest);
+        Page<Post> page1 = postRepo.findAllByUser(user, pageableRequest);
         List<Post> posts = page1.getContent();
         return new PostResponse(convertPostToDtos(posts), count);
     }

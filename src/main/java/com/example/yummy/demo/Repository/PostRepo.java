@@ -18,5 +18,5 @@ public interface PostRepo extends MongoRepository<Post, String> {
 
     //for page
     Page<Post> findAll(Pageable pageableRequest);
-    Page<Post> findAllByUser(Pageable pageableRequest);
+    Page<Post> findAllByUser(User user, Pageable pageableRequest);
 }

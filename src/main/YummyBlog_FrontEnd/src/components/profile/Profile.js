@@ -39,7 +39,7 @@ const Profile = ({
                       {myprofile &&
                         myprofile.user._id !== profile.user._id &&
                         (myprofile.follows
-                          .map(item => item.user.toString())
+                          .map(item => item.userId.toString())
                           .includes(profile.user._id) ? (
                           <button
                             className="follow"
